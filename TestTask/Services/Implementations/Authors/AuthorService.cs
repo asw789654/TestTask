@@ -36,8 +36,8 @@ public class AuthorService : IAuthorService
 
         var maxLen = await books.MaxAsync(x => x.Title.Length);
 
-        var book = await books.SingleOrDefaultAsync(x => x.Title.Length == maxLen);
+        var book = await books.OrderByDescending(y => y.AuthorId).FirstOrDefaultAsync(x => x.Title.Length == maxLen);
 
-        return await authors.SingleOrDefaultAsync(x => x.Id == book.AuthorId);
+        return await authors.FirstOrDefaultAsync(x => x.Id == book.AuthorId);
     }
 }
